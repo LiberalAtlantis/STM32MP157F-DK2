@@ -35,7 +35,7 @@ sudo /etc/init.d/vsftpd restart
 
 ### 1.2 Windows下FTP客户端安装
 
-Windows下FTP客户端我们使用FileZilla，这是个免费的FTP客户端软件，可以在FileZilla官网下载，下载地址如下：[https://www.filezilla.cn/download]。如果是32位电脑就选择32位版本，64位电脑就选择64位版本。
+Windows下FTP客户端我们使用FileZilla，这是个免费的FTP客户端软件，可以在FileZilla官网下载，下载地址如下： [https://www.filezilla.cn/download] 。如果是32位电脑就选择32位版本，64位电脑就选择64位版本。
 
 ### 1.3 FileZilla软件设置
 
@@ -111,7 +111,7 @@ ARM裸机、Uboot移植、Linux移植等都需要在Ubuntu下进行编译，编�
 
 交叉编译器中“交叉”的意思就是在一个架构上编译另外一个架构的代码，相当于两种架构“交叉”。交叉编译器有很多种，ST推荐了两款通用交叉编译器，一个是ARM官方出品的：gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf；一个是linaro出品的：gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabi.tar.xz，本教程我们使用ARM官方出品的交叉编译器。
 
-首先是下载ARM官方出品的交叉编译器，编译器下载地址如下：[https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads]。其中的gcc-arm-x.x-xxxx.xx-x86_64-arm-none-linux-gnueabihf.tar.xz是在64位Ubuntu下使用的交叉编译器(其中，x.x代表版本，xxxx.xx代表版本发布时间，本教程以gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz为例)。
+首先是下载ARM官方出品的交叉编译器，编译器下载地址如下： [https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads] 。其中的gcc-arm-x.x-xxxx.xx-x86_64-arm-none-linux-gnueabihf.tar.xz是在64位Ubuntu下使用的交叉编译器(其中，x.x代表版本，xxxx.xx代表版本发布时间，本教程以gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz为例)。
 
 先将交叉编译工具拷贝到Ubuntu中，在Ubuntu中创建目录：/usr/local/arm，命令如下：
 
@@ -270,7 +270,7 @@ intmain(void)
 
 ### 5.1 MobaXterm软件安装
 
-MobaXterm是一款终端软件，支持很多种协议，比如SSH、Telnet、Rsh、Xdmcp、RDP、VNC、FTP、SFTP、Serial等等，功能强大而且免费(也有收费版)！在这里推荐大家使用此软件作为终端调试软件，MobaXterm软件在其官网下载即可，地址为：[https://mobaxterm.mobatek.net/]。
+MobaXterm是一款终端软件，支持很多种协议，比如SSH、Telnet、Rsh、Xdmcp、RDP、VNC、FTP、SFTP、Serial等等，功能强大而且免费(也有收费版)！在这里推荐大家使用此软件作为终端调试软件，MobaXterm软件在其官网下载即可，地址为： [https://mobaxterm.mobatek.net/] 。
 
 ### 5.2 MobaXterm软件使用
 
@@ -311,7 +311,7 @@ STM32CubeProgrammer支持对外部存储器进行编程、擦除和验证，用�
 
 ### 6.2 Java环境安装
 
-在安装STM32CbeMX和STM32CubeIDE前我们要先安装Java的环境，Java运行环境版本必须是V1.7及以上，否则会导致这两个无法使用。大家可以到Java官网[https://www.java.com/zh-CN/download/manual.jsp]查找下载最新的64位Java软件。
+在安装STM32CbeMX和STM32CubeIDE前我们要先安装Java的环境，Java运行环境版本必须是V1.7及以上，否则会导致这两个无法使用。大家可以到Java官网 [https://www.java.com/zh-CN/download/manual.jsp] 查找下载最新的64位Java软件。
 
 安装完Java运行环境之后，为了检测是否正常安装，我们可以打开Windows的cmd命令输入框，输入如下命令：
 
