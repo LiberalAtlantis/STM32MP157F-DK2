@@ -1,47 +1,50 @@
 # 开发环境搭建
 
-如果学习过UCOS/FreeRTOS应该知道，UCOS/FreeRTOS移植就是在官方的SDK包里面找一个和自己所使用的芯片一样的工程编译一下，然后下载到开发板就可以了。Linux的移植要复杂的多，在移植Linux之前需要先移植一个bootloader代码，这个bootloader代码用于启动Linux内核，bootloader有很多，常用的就是U-Boot。移植好U-Boot以后再移植Linux内核，移植完Linux内核以后Linux还不能正常启动，还需要再移植一个根文件系统(rootfs)，根文件系统里面包含了一些最常用的命令和文件。所以U-Boot、LinuxKernel和rootfs这三者一起构成了一个完整的Linux系统，一个可以正常使用、功能完善的Linux系统。
+如果学习过 UCOS/FreeRTOS 应该知道， UCOS/FreeRTOS 移植就是在官方的 SDK 包里面找一个和自己所使用的芯片一样的工程编译一下，然后下载到开发板就可以了。 Linux 的移植要复杂的多，在移植 Linux 之前需要先移植一个 bootloader 代码，这个 bootloader 代码用于启动 Linux 内核， bootloader 有很多，常用的就是 U-Boot 。移植好 U-Boot 以后再移植 Linux 内核，移植完 Linux 内核以后 Linux 还不能正常启动，还需要再移植一个根文件系统 ( rootfs ) ，根文件系统里面包含了一些最常用的命令和文件。所以 U-Boot 、 LinuxKernel 和 rootfs 这三者一起构成了一个完整的 Linux 系统，一个可以正常使用、功能完善的Linux系统。
 
-在Ubuntu下进行Cortex-A(STM32MP157)开发需要安装一些软件，也就开发环境搭建，环境搭建好以后我们就可以进行开发了。环境搭建分为Ubuntu和Windows，因为我们最熟悉Windows，所以代码编写、查找资料等一般是在Windows下进行的。但是Linux开发又必须在Ubuntu下进行，所以需要搭建Ubuntu下的开发环境，主要是交叉编译器的安装，本章我们就分为Ubuntu和Windows，讲解这两种操作系统下的环境搭建。
+在 Ubuntu 下进行 Cortex-A ( STM32MP157 ) 开发需要安装一些软件，也就开发环境搭建，环境搭建好以后我们就可以进行开发了。环境搭建分为 Ubuntu 和 Windows ，因为我们最熟悉 Windows ，所以代码编写、查找资料等一般是在 Windows 下进行的。但是 Linux 开发又必须在 Ubuntu 下进行，所以需要搭建 Ubuntu 下的开发环境，主要是交叉编译器的安装，本章我们就分为 Ubuntu 和 Windows ，讲解这两种操作系统下的环境搭建。
 
-## 1 Ubuntu和Windows文件互传
+## 1 Ubuntu 和 Windows 文件互传
 
-### 1.1 开启Ubuntu下的FTP服务
+### 1.1 开启 Ubuntu 下的 FTP 服务
 
-打开Ubuntu的终端窗口，然后执行如下命令来安装FTP服务：
+打开 Ubuntu 的终端窗口，然后执行如下命令来安装 FTP 服务：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo apt-get install vsftpd
 ~~~
 
-等待软件自动安装，安装完成以后使用如下VI命令打开/etc/vsftpd.conf，命令如下：
+等待软件自动安装，安装完成以后使用如下 vi 命令打开 /etc/vsftpd.conf ，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo vi /etc/vsftpd.conf
 ~~~
 
-打开以后在vsftpd.conf文件中找到如下两行：
+打开以后在 vsftpd.conf 文件中找到如下两行：
 
 ~~~bash
 local_enable=YES
 write_enable=YES
 ~~~
 
-确保上面两行前面没有“#”，有的话就取消掉。修改完vsftpd.conf以后保存退出，使用如下命令重启FTP服务：
+确保上面两行前面没有 “ # ” ，有的话就取消掉。修改完 vsftpd.conf 以后保存退出，使用如下命令重启 FTP 服务：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo /etc/init.d/vsftpd restart
 ~~~
 
-### 1.2 Windows下FTP客户端安装
+### 1.2 Windows 下 FTP 客户端安装
 
-Windows下FTP客户端我们使用FileZilla，这是个免费的FTP客户端软件，可以在FileZilla官网下载，下载地址如下： [https://www.filezilla.cn/download] 。如果是32位电脑就选择32位版本，64位电脑就选择64位版本。
+Windows 下 FTP 客户端我们使用 FileZilla ，这是个免费的 FTP 客户端软件，可以在 FileZilla 官网下载，下载地址如下： [https://www.filezilla.cn/download] 。如果是 32 位电脑就选择 32 位版本， 64 位电脑就选择 64 位版本。
 
 ### 1.3 FileZilla软件设置
 
-Ubuntu作为FTP服务器，FileZilla作为FTP客户端，客户端肯定要连接到服务器上，打开站点管理器，点击：文件->站点管理器。点击“新站点(N)”按钮来创建站点，新建站点以后就会在“我的站点”下出现新建的这个站点，站点的名称可以自行修改，比如我将新的站点命名为“Ubuntu”。
+Ubuntu 作为 FTP 服务器， FileZilla 作为 FTP 客户端，客户端肯定要连接到服务器上，打开站点管理器，点击：文件->站点管理器。点击 “新站点 ( N ) ” 按钮来创建站点，新建站点以后就会在“我的站点”下出现新建的这个站点，站点的名称可以自行修改，比如我将新的站点命名为 “ Ubuntu ” 。
 
-选中新创建的“Ubuntu”站点，然后对站点的“常规”进行设置，设置项点如下：
+选中新创建的 “ Ubuntu ” 站点，然后对站点的 “ 常规 ” 进行设置，设置项点如下：
 
 (1)协议(T):FTP-文件传输协议
 
@@ -66,12 +69,14 @@ Ubuntu作为FTP服务器，FileZilla作为FTP客户端，客户端肯定要连�
 后面进行Linux驱动开发的时候需要NFS启动，因此要先安装并开启Ubuntu中的NFS服务，使用如下命令安装NFS服务：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo apt-get install nfs-kernel-server rpcbind
 ~~~
 
 等待安装完成，安装完成以后在用户根目录下创建一个名为“linux”的文件夹，以后所有的东西都放到这个“linux”文件夹里面，在“linux”文件夹里面新建一个名为“nfs”的文件夹。创建的nfs文件夹供nfs服务器使用，以后可以在开发板上通过网络文件系统来访问nfs文件夹。首先配置nfs，使用如下命令打开nfs配置文件/etc/exports：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo vi /etc/exports
 ~~~
 
@@ -84,6 +89,7 @@ sudo vi /etc/exports
 重启NFS服务，使用命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo /etc/init.d/nfs-kernel-server restart
 ~~~
 
@@ -92,6 +98,7 @@ sudo /etc/init.d/nfs-kernel-server restart
 开启Ubuntu的SSH服务以后我们就可以在Windwos下使用终端软件登陆到Ubuntu，比如使用SecureCRT，Ubuntu下使用如下命令开启SSH服务：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo apt-get install openssh-server
 ~~~
 
@@ -116,24 +123,28 @@ ARM裸机、Uboot移植、Linux移植等都需要在Ubuntu下进行编译，编�
 先将交叉编译工具拷贝到Ubuntu中，在Ubuntu中创建目录：/usr/local/arm，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo mkdir /usr/local/arm
 ~~~
 
 创建完成以后将刚刚拷贝的交叉编译器复制到/usr/local/arm这个目录中，在终端使用命令“cd”进入到存放有交叉编译器的目录，拷贝完成以后在/usr/local/arm目录中对交叉编译工具进行解压，解压命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo tar -vxf gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz
 ~~~
 
 解压完成后会生成一个名为“gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf”的文件夹，文件夹里面就是交叉编译工具链。修改环境变量，打开/etc/profile文件，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo vi /etc/profile
 ~~~
 
 打开/etc/profile以后，在最后面输入如下所示内容：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 export PATH=$PATH:/usr/local/arm/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin
 ~~~
 
@@ -144,8 +155,11 @@ export PATH=$PATH:/usr/local/arm/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnuea
 在使用交叉编译器之前还需要安装一下其它的库，命令如下：
 
 ~~~bash
-sudo apt-get update//先更新，否则安装库可能会出错
-sudo apt-get install lsb-core lib32stdc++6//安装库等待这些库安装完成。
+masterchief@MasterChief:~/workspace$ 
+sudo apt-get update         //先更新，否则安装库可能会出错
+
+masterchief@MasterChief:~/workspace$ 
+sudo apt-get install lsb-core lib32stdc++6      //安装库等待这些库安装完成。
 ~~~
 
 ### 3.3 交叉编译器验证
@@ -153,12 +167,13 @@ sudo apt-get install lsb-core lib32stdc++6//安装库等待这些库安装完成
 首先查看一下交叉编译工具的版本号，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 arm-none-linux-gnueabihf-gcc -v
 ~~~
 
 如果交叉编译器安装正确的话就会显示版本号。
 
-使用Ubuntu自带的GCC编译器，用的是命令“gcc”。使用本节安装的交叉编译器的时候使用的命令是“arm-none-linux-gnueabihf-gcc”，“arm-none-linux-gnueabihf-gcc”的含义如下：
+使用 Ubuntu 自带的 GCC 编译器，用的是命令“ gcc ”。使用本节安装的交叉编译器的时候使用的命令是“ arm-none-linux-gnueabihf-gcc ”，“ arm-none-linux-gnueabihf-gcc ”的含义如下：
 
 1、arm表示这是编译arm架构代码的编译器。
 
@@ -185,6 +200,7 @@ Windows版本的安装和容易，和其他Windows应用程序一样，双击.ex
 有时候也需要在Ubuntu下阅读代码，所以需要在Ubuntu下安装VSCode。将Linux下VSCode的.deb软件包拷贝到Ubuntu系统中，然后使用如下命令安装：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo dpkg -i code_1.50.1-1602600906_amd64.deb
 ~~~
 
@@ -316,6 +332,7 @@ STM32CubeProgrammer支持对外部存储器进行编程、擦除和验证，用�
 安装完Java运行环境之后，为了检测是否正常安装，我们可以打开Windows的cmd命令输入框，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 java -version //命令查询Java版本
 ~~~
 
@@ -328,12 +345,14 @@ java -version //命令查询Java版本
 在Ubuntu下安装这三个软件也是需要JAVA运行环境的，Ubuntu可能会默认安装了OpenJDK环境，但是STM32CubeProgrammer是用Oracle的JDK编写的，所以需要先卸载掉默认的OpeJDK，首先输入“java -version”查看一下当前Ubuntu系统下有没有OpenJDK，有的话会输出OpenJDK版本信息。
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 java -version
 ~~~
 
 如果没有输出JAVA版本信息的话就说明当前Ubuntu还没有安装JAVA环境。卸载OpenJDK的方法很简单，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo apt-get remove openjdk*
 ~~~
 
@@ -342,7 +361,10 @@ sudo apt-get remove openjdk*
 将下载的Linux版本Java(本文以jre-8u271-linux-x64.tar.gz为例)压缩包拷贝到Ubuntu下，然后解压到Ubuntu的/usr/lib/jvm目录下，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo mkdir /usr/local/java  //创建目录
+
+masterchief@MasterChief:~/workspace$ 
 sudo tar vzxf jre-8u271-linux-x64.tar.gz -C /usr/local/java  //解压
 ~~~
 
@@ -360,14 +382,20 @@ export PATH=$PATH:/usr/local/java/jre1.8.0_271/bin
 在Ubuntu下新建一个名为“STM32CubeMX”的文件夹，然后将STM32CubeMX安装包en.stm32cubemx_v6-0-1.zip发送到此文件夹下，然后进行解压，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 unzip en.stm32cubemx_v6-0-1.zip
 ~~~
 
 解压出来的文件一个都不要删除，防止安装的时候出错，在终端里面执行文件夹中的SetupSTM32CubeMX-6.0.1.linux，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 chmod 777 SetupSTM32CubeMX-6.0.1.linux  //给予可执行权限
+
+masterchief@MasterChief:~/workspace$ 
 chmod 777 SetupSTM32CubeMX-6.0.1.exe    //给予可执行权限
+
+masterchief@MasterChief:~/workspace$ 
 ./SetupSTM32CubeMX-6.0.1.linux
 ~~~
 
@@ -378,13 +406,17 @@ chmod 777 SetupSTM32CubeMX-6.0.1.exe    //给予可执行权限
 在Ubuntu下新建一个名为“STM32CubeIDE”的文件夹，然后将STM32CubeMX安装包en.st-stm32cubeide_1.4.0_7511_20200720_0928_amd64_sh.zip发送到此文件夹下，然后进行解压，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 unzip en.st-stm32cubeide_1.4.0_7511_20200720_0928_amd64_sh.zip
 ~~~
 
 在终端里面执行图4.8.3.1中的st-stm32cubeide_1.4.0_7511_20200720_0928_amd64.sh，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 chmod 777 st-stm32cubeide_1.4.0_7511_20200720_0928_amd64.sh //给予可执行权限
+
+masterchief@MasterChief:~/workspace$ 
 ./st-stm32cubeide_1.4.0_7511_20200720_0928_amd64.sh
 ~~~
 
@@ -395,12 +427,14 @@ chmod 777 st-stm32cubeide_1.4.0_7511_20200720_0928_amd64.sh //给予可执行权
 在Ubuntu下新建一个名为“STM32CubeProgrammer”的文件夹，然后将STM32CubeMX安装包en.stm32cubeprog_v2-5-0.zip发送到此文件夹下，然后进行解压缩，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 unzip en.stm32cubeprog_v2-5-0.zip
 ~~~
 
 解压出来的文件一个都不要删除，防止安装的时候出错，在终端里面执行图4.8.4.2中的SetupSTM32CubeProgrammer-2.5.0.linux即可，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 ./SetupSTM32CubeProgrammer-2.5.0.linux
 ~~~
 
@@ -409,6 +443,7 @@ unzip en.stm32cubeprog_v2-5-0.zip
 最后，在Ubuntu中安装libusb1.0软件包，输入如下命令：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 sudo apt-get install libusb-1.0.0-dev
 ~~~
 
@@ -435,7 +470,10 @@ sudo apt-get install libusb-1.0.0-dev
 进入路径：/STMicroelectronics/STM32Cube/STM32CubeProgrammer/Drivers/rules，将.rules文件全部拷贝到Ubuntu的/etc/udev/rules.d目录下，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 cd /home/zuozhongkai/STMicroelectronics/STM32Cube/STM32CubeProgrammer/Drivers/rulessudo 
+
+masterchief@MasterChief:~/workspace$ 
 cp * /etc/udev/rules.d/
 ~~~
 
@@ -446,5 +484,6 @@ cp * /etc/udev/rules.d/
 最后，测试下STLink，这个测试比较简单，将STLink连接到Ubuntu下，如果STLink工作成功的话就会在/dev目录下生成相应的设备文件，命令如下：
 
 ~~~bash
+masterchief@MasterChief:~/workspace$ 
 ls /dev/stlink*
 ~~~
